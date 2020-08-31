@@ -1,11 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class App extends Component {
-  render() {
-    return <div>
-      <h1>React effect</h1>
-    </div>
-  }
+import PostList from './components/PostList/PostList';
+import { useState } from 'react';
+
+import axios from 'axios';
+import { useEffect } from 'react';
+
+function App() {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1'
+      const { data: { data } } = await axios.get(url);
+      setData(data);
+    }
+    fetchData();
+  }, [])
+
+  return <div>
+    <PostList data={data} />
+  </div>
 }
 
 export default App;
