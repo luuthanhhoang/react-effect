@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Pagination from './components/Pagination/Pagination';
 import PostSearch from './components/PostSearch/PostSearch';
+import Clock from './components/Clock/Clock';
 
 function App() {
   const [data, setData] = useState([])
@@ -16,6 +17,7 @@ function App() {
     _totalRows: 50,
     title_like: ''
   });
+  const [showClock, setShowClock] = useState(true);
 
   const { _page, title_like } = listPage;
   useEffect(() => {
@@ -35,8 +37,14 @@ function App() {
     console.log(searchValue)
     setListPage({ ...listPage, title_like: searchValue });
   }
+  const handleHideClock = () => {
+    setShowClock(!showClock);
+  }
 
   return <div>
+    <h1 style={{ color: 'deeppink' }}>React effect</h1>
+    {showClock && <Clock />}
+    <button onClick={handleHideClock}>Hide Clock</button>
     <PostSearch title_like={title_like} handleSearch={handleSearch} />
     <PostList data={data} />
     <Pagination listPage={listPage} handleChangePage={handleChangePage} />
